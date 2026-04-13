@@ -7,7 +7,7 @@ MODEL="Qwen/Qwen2.5-VL-7B-Instruct"
 # MAX_NUM=1 \
 MAX_PIXELS=50176 \
 CUDA_VISIBLE_DEVICES=0 vllm serve $MODEL \
-    --host "10.20.22.69" \
+    --host "0.0.0.0" \
     --port 8014 \
     --api-key vehm \
     --max-model-len 8192 \

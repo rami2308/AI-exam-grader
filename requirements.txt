@@ -1,0 +1,28 @@
+# Core AI & Models
+torch==2.6.0
+torchvision
+torchaudio
+transformers==4.51.1
+accelerate==1.6.0
+peft==0.15.2
+
+# The Heavy Lifters (VEHME specifics)
+vllm==0.8.3
+ms-swift==3.4.1
+modelscope==1.25.0
+qwen-vl-utils==0.0.10
+
+# Vision & Processing
+ultralytics==8.3.115
+opencv-python-headless
+pillow
+timm
+
+# Utilities & UI
+wandb
+gradio
+scipy
+pandas
+sentencepiece
+tiktoken
+protobuf
