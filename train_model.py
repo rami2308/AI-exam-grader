@@ -9,18 +9,18 @@ import joblib
 import os
 
 # ==========================================
-# הגדרות
+# Settings
 # ==========================================
 INPUT_FILE = "training_features.csv"
 MODEL_FILE = "grader_model.pth"
 SCALER_FILE = "scaler.pkl"
 GRAPH_FILE = "loss_curve.png"
 
-# סף רעש: אם הפער בין ה-AI למרצה גדול מזה, נזרוק את הדוגמה
-NOISE_THRESHOLD = 30 
+# Noise threshold: if the gap between the AI and the lecturer is larger than this, drop the sample
+NOISE_THRESHOLD = 30
 
 # ==========================================
-# 1. טעינת הנתונים וסינון רעשים חכם
+# 1. Loading Data and Smart Noise Filtering
 # ==========================================
 if not os.path.exists(INPUT_FILE):
     print(f"❌ Error: {INPUT_FILE} not found. Run extract_features.py first.")
@@ -35,31 +35,31 @@ clean_rows = []
 print("\n🧹 Running Noise Filter (Sanity Check)...")
 print("-" * 60)
 for index, row in raw_df.iterrows():
-    # חישוב "ציון משוער" גס של ה-AI (ממוצע של הפרמטרים)
-    # זה לא הציון הסופי, אלא רק אינדיקציה לבדיקת שפיות
+    # Calculate a rough "estimated score" from the AI (average of parameters)
+    # This is not the final score, just an indicator for sanity checking
     ai_rough_score = (row['logic'] + row['accuracy'] + row['clarity']) / 3
-    
+
     real_grade = row['real_grade']
-    
-    # חישוב הפער (הדיסוננס)
+
+    # Calculate the gap (the dissonance)
     gap = abs(ai_rough_score - real_grade)
-    
-    # הסינון: אם הפער ענק, זה רעש
+
+    # Filter: if the gap is huge, it's noise
     if gap < NOISE_THRESHOLD:
         clean_rows.append(row)
         status = "✅ Keep"
     else:
         status = "🗑️ DROP (Noise)"
-    
+
     print(f"File: {row['filename'][:15]:<15} | AI View: {ai_rough_score:.0f} | Real: {real_grade} | Gap: {gap:.0f} | {status}")
 
 print("-" * 60)
 
-# יצירת הדאטה-בייס הנקי
+# Create the clean dataset
 df = pd.DataFrame(clean_rows)
 print(f"📉 Final dataset size: {len(df)} (Dropped {len(raw_df) - len(df)} outliers)\n")
 
-# הכנת הנתונים לאימון
+# Prepare data for training
 X = df[['logic', 'accuracy', 'clarity']].values
 y = df['real_grade'].values
 
@@ -71,12 +71,12 @@ X_tensor = torch.FloatTensor(X_scaled)
 y_tensor = torch.FloatTensor(y).view(-1, 1)
 
 # ==========================================
-# 2. המודל הליניארי (היציב)
+# 2. The Linear Model (Stable)
 # ==========================================
 class GraderNet(nn.Module):
     def __init__(self):
         super(GraderNet, self).__init__()
-        # מודל ליניארי פשוט: שכבה אחת
+        # Simple linear model: one layer
         self.fc1 = nn.Linear(3, 1)
 
     def forward(self, x):
@@ -86,12 +86,12 @@ class GraderNet(nn.Module):
 model = GraderNet()
 
 # ==========================================
-# 3. אימון (Training)
+# 3. Training
 # ==========================================
-# הגדרות אגרסיביות כדי להגיע לתוצאה מהר ומדויק
-optimizer = optim.Adam(model.parameters(), lr=0.1) 
+# Aggressive settings to reach results quickly and accurately
+optimizer = optim.Adam(model.parameters(), lr=0.1)
 criterion = nn.MSELoss()
-epochs = 5000 
+epochs = 5000
 
 print("🚀 Starting Training on Clean Data...")
 
@@ -105,13 +105,13 @@ for epoch in range(epochs):
 print("✅ Training Complete!")
 
 # ==========================================
-# 4. שמירה ובדיקה
+# 4. Saving and Verification
 # ==========================================
 torch.save(model.state_dict(), MODEL_FILE)
 print(f"💾 Model saved to: {MODEL_FILE}")
 print(f"💾 Scaler saved to: {SCALER_FILE}")
 
-# הדפסת המשקולות (כדי לוודא שהמודל למד ש-Accuracy זה חשוב)
+# Print weights to verify the model learned that Accuracy is important
 weights = model.fc1.weight.data.numpy()[0]
 print("\n🧠 Learned Weights (Importance):")
 print(f"   Logic:    {weights[0]:.2f}")

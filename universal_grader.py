@@ -4,14 +4,14 @@ from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, Bits
 from qwen_vl_utils import process_vision_info
 
 # ==========================================
-# 1. הגדרות נתיבים
+# 1. Path Settings
 # ==========================================
 QUESTIONS_DIR = "data/questions"
 SOLUTIONS_DIR = "data/solutions"
 MODEL_PATH = "Qwen/Qwen2.5-VL-7B-Instruct"
 
 # ==========================================
-# 2. טעינת המודל
+# 2. Loading the Model
 # ==========================================
 print(f"Loading Universal Grader Brain...")
 bnb_config = BitsAndBytesConfig(
@@ -32,7 +32,7 @@ except Exception as e:
     exit()
 
 # ==========================================
-# 3. הפרומפט המתוקן (Chain of Thought)
+# 3. The Refined Prompt (Chain of Thought)
 # ==========================================
 UNIVERSAL_PROMPT = """
 You are a Precise and Fair Exam Grader.
@@ -70,20 +70,20 @@ Feedback: (Constructive feedback).
 """
 
 # ==========================================
-# 4. המנוע הראשי
+# 4. The Main Engine
 # ==========================================
 while True:
     print("\n" + "="*50)
     print("🌍 UNIVERSAL GRADING SYSTEM (v2.0)")
     print("="*50)
-    
+
     if not os.path.exists(SOLUTIONS_DIR) or not os.path.exists(QUESTIONS_DIR):
         print(f"❌ Error: Missing folders '{QUESTIONS_DIR}' or '{SOLUTIONS_DIR}'")
         break
 
     files = sorted([f for f in os.listdir(SOLUTIONS_DIR) if f.lower().endswith(('.png', '.jpg', '.jpeg'))])
     valid_pairs = []
-    
+
     for f in files:
         q_path = os.path.join(QUESTIONS_DIR, f)
         if os.path.exists(q_path):
@@ -96,19 +96,19 @@ while True:
 
     for i, fname in enumerate(valid_pairs):
         print(f" [{i+1}] {fname}")
-    
+
     choice = input("\nSelect pair to grade (or 'q' to quit): ")
     if choice.lower() == 'q': break
-    
+
     try:
         idx = int(choice) - 1
         if 0 <= idx < len(valid_pairs):
             filename = valid_pairs[idx]
             q_img_path = os.path.join(QUESTIONS_DIR, filename)
             s_img_path = os.path.join(SOLUTIONS_DIR, filename)
-            
+
             print(f"\n📝 Analyzing: {filename}...")
-            
+
             messages = [
                 {
                     "role": "user",
@@ -133,14 +133,12 @@ while True:
             )
             inputs = inputs.to("cuda")
 
-            # שינוי קריטי: do_sample=False ו-temperature נמוך לדיוק מקסימלי
             generated_ids = model.generate(
-                **inputs, 
+                **inputs,
                 max_new_tokens=1024,
-                do_sample=False,      # ביטול הרנדומליות
-                temperature=0.1       # הקפאת ה"יצירתיות" לטובת דיוק
+                do_sample=False
             )
-            
+
             generated_ids_trimmed = [
                 out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
             ]

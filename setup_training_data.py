@@ -2,16 +2,16 @@ import os
 import pandas as pd
 
 # ==========================================
-# עדכון שמות התיקיות לשמות שלך
+# Update folder names to your own if needed
 # ==========================================
 QUESTIONS_DIR = "data/questions"
 ANSWERS_DIR = "data/solutions"
 OUTPUT_FILE = "train.csv"
 
 # ==========================================
-# 1. סריקת הקבצים
+# 1. Scanning Files
 # ==========================================
-# בדיקה שהתיקיות בכלל קיימות כדי למנוע קריסה
+# Check that the folders exist to prevent crashes
 if not os.path.exists(QUESTIONS_DIR) or not os.path.exists(ANSWERS_DIR):
     print(f"❌ Error: Folders not found!")
     print(f"   Looking for: {QUESTIONS_DIR}")
@@ -21,21 +21,21 @@ if not os.path.exists(QUESTIONS_DIR) or not os.path.exists(ANSWERS_DIR):
 q_files = set(os.listdir(QUESTIONS_DIR))
 a_files = set(os.listdir(ANSWERS_DIR))
 
-# מוצאים רק את הקבצים המשותפים (שיש להם זוג)
+# Find only matching files (that have a pair in both folders)
 valid_files = sorted(list(q_files.intersection(a_files)))
 
 print(f"✅ Found {len(valid_files)} matching pairs (Question + Solution).")
 
 # ==========================================
-# 2. יצירת הטבלה
+# 2. Creating the Table
 # ==========================================
 data = []
 for filename in valid_files:
-    # אנחנו שמים "0" כברירת מחדל, אתה תשנה את זה אח"כ ידנית
+    # We set "0" as default grade — change this manually after
     data.append({"filename": filename, "grade": 0})
 
 # ==========================================
-# 3. שמירה לקובץ
+# 3. Saving to File
 # ==========================================
 if data:
     df = pd.DataFrame(data)

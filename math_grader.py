@@ -4,13 +4,13 @@ from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, Bits
 from qwen_vl_utils import process_vision_info
 
 # ==========================================
-# הגדרות מערכת
+# System Settings
 # ==========================================
 EXERCISE_FOLDER = "data/exercises"
 MODEL_PATH = "Qwen/Qwen2.5-VL-7B-Instruct"
 
 # ==========================================
-# 1. טעינת המודל (4-bit למניעת קריסה)
+# 1. Loading the Model (4-bit to prevent crashes)
 # ==========================================
 print(f"Loading AI Model from {MODEL_PATH}...")
 print("Configuring 4-bit quantization for Tesla T4 compatibility...")
@@ -33,7 +33,7 @@ processor = AutoProcessor.from_pretrained(MODEL_PATH, trust_remote_code=True)
 print("Model Loaded Successfully! 🚀")
 
 # ==========================================
-# 2. הלוגיקה החדשה (ECF Support)
+# 2. The New Logic (ECF Support)
 # ==========================================
 SYSTEM_PROMPT = """
 You are an empathetic but precise Math Professor grading an exam based on a strict rubric.
@@ -67,15 +67,15 @@ Your goal is to evaluate the student's UNDERSTANDING, not just the final number.
 """
 
 # ==========================================
-# 3. לולאת הבחירה והבדיקה
+# 3. Selection and Grading Loop
 # ==========================================
 while True:
     print("\n" + "="*40)
     print("📂 Available Exercises:")
-    
+
     if not os.path.exists(EXERCISE_FOLDER):
         os.makedirs(EXERCISE_FOLDER)
-        
+
     files = [f for f in os.listdir(EXERCISE_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
     files.sort()
 
@@ -99,9 +99,9 @@ while True:
         if 0 <= idx < len(files):
             selected_image = files[idx]
             image_path = os.path.join(EXERCISE_FOLDER, selected_image)
-            
+
             print(f"\n📝 Grading: {selected_image} with Logic-First Rubric...")
-            
+
             messages = [
                 {
                     "role": "user",
@@ -123,9 +123,9 @@ while True:
             )
             inputs = inputs.to("cuda")
 
-            generated_ids = model.generate(**inputs, max_new_tokens=1024)
+            generated_ids = model.generate(**inputs, max_new_tokens=1024, do_sample=False)
             generated_ids_trimmed = [
-                out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+                out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
             ]
             output_text = processor.batch_decode(
                 generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
@@ -134,7 +134,7 @@ while True:
             print("\n" + "-"*15 + " TEACHER REPORT " + "-"*15)
             print(output_text[0])
             print("-" * 46)
-            input("\nPress Enter to continue...") 
+            input("\nPress Enter to continue...")
 
         else:
             print("❌ Invalid number.")

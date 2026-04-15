@@ -4,9 +4,9 @@ from transformers import Qwen2_5_VLForConditionalGeneration, AutoProcessor, Bits
 from qwen_vl_utils import process_vision_info
 
 # ==========================================
-# הגדרות השאלה (כאן המרצה מכניס את הנתונים)
+# Question Settings (lecturer enters data here)
 # ==========================================
-# דוגמה: שאלה בהיסטוריה/אזרחות
+# Example: History/Civics question
 QUESTION = "Explain the principle of 'Separation of Powers' in a democracy."
 REFERENCE_ANSWER = """
 The principle of separation of powers divides the government into three branches:
@@ -17,9 +17,9 @@ The goal is to prevent concentration of power and enable checks and balances.
 """
 
 # ==========================================
-# הגדרות מודל (אותו מנוע חזק)
+# Model Settings (same powerful engine)
 # ==========================================
-EXERCISE_FOLDER = "data/text_answers" # שים לב לתיקייה החדשה
+EXERCISE_FOLDER = "data/text_answers"  # Note the new folder
 MODEL_PATH = "Qwen/Qwen2.5-VL-7B-Instruct"
 
 print(f"Loading AI Model...")
@@ -37,7 +37,7 @@ processor = AutoProcessor.from_pretrained(MODEL_PATH, trust_remote_code=True)
 print("Model Loaded! 🚀")
 
 # ==========================================
-# הפרומפט המותאם לשאלות פתוחות
+# Prompt adapted for open-ended questions
 # ==========================================
 SYSTEM_PROMPT = f"""
 You are a History/Civics Professor grading a handwritten exam.
@@ -73,15 +73,15 @@ Feedback: (One sentence summary).
 """
 
 # ==========================================
-# לולאת הבדיקה
+# Grading Loop
 # ==========================================
 while True:
     print("\n" + "="*40)
     print("📂 Available Text Answers:")
-    
+
     if not os.path.exists(EXERCISE_FOLDER):
         os.makedirs(EXERCISE_FOLDER)
-        
+
     files = [f for f in os.listdir(EXERCISE_FOLDER) if f.lower().endswith(('.png', '.jpg', '.jpeg'))]
     files.sort()
 
@@ -104,9 +104,9 @@ while True:
         if 0 <= idx < len(files):
             selected_image = files[idx]
             image_path = os.path.join(EXERCISE_FOLDER, selected_image)
-            
+
             print(f"\n📝 Reading Handwriting: {selected_image}...")
-            
+
             messages = [
                 {
                     "role": "user",
@@ -128,9 +128,9 @@ while True:
             )
             inputs = inputs.to("cuda")
 
-            generated_ids = model.generate(**inputs, max_new_tokens=512)
+            generated_ids = model.generate(**inputs, max_new_tokens=512, do_sample=False)
             generated_ids_trimmed = [
-                out_ids[len(in_ids) :] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
+                out_ids[len(in_ids):] for in_ids, out_ids in zip(inputs.input_ids, generated_ids)
             ]
             output_text = processor.batch_decode(
                 generated_ids_trimmed, skip_special_tokens=True, clean_up_tokenization_spaces=False
@@ -139,7 +139,7 @@ while True:
             print("\n" + "-"*15 + " GRADING REPORT " + "-"*15)
             print(output_text[0])
             print("-" * 46)
-            input("\nPress Enter to continue...") 
+            input("\nPress Enter to continue...")
 
         else:
             print("❌ Invalid number.")
