@@ -8,18 +8,17 @@ from qwen_vl_utils import process_vision_info
 # ==========================================
 # Settings
 # ==========================================
-INPUT_CSV = "train.csv"
-OUTPUT_CSV = "training_features.csv"
-MODEL_PATH = "Qwen/Qwen2.5-VL-7B-Instruct"
+INPUT_CSV     = "train.csv"
+OUTPUT_CSV    = "training_features.csv"
+MODEL_PATH    = "Qwen/Qwen2.5-VL-7B-Instruct"
+QUESTIONS_DIR = "data/questions"
+SOLUTIONS_DIR = "data/solutions"
+ANSWERS_DIR   = "data/answers"
 
-# Clear GPU memory
 if torch.cuda.is_available():
     torch.cuda.empty_cache()
 
-# ==========================================
-# Loading the Model (stable and memory-efficient)
-# ==========================================
-print("👁️  Loading Qwen Vision Model (Fair Grader Mode)...")
+print("Loading Qwen Vision Model...")
 bnb_config = BitsAndBytesConfig(
     load_in_4bit=True,
     bnb_4bit_use_double_quant=True,
@@ -33,52 +32,53 @@ try:
     )
     processor = AutoProcessor.from_pretrained(MODEL_PATH)
 except Exception as e:
-    print(f"❌ Error loading model: {e}")
+    print(f"Error loading model: {e}")
     exit()
 
-# ==========================================
-# Logic
-# ==========================================
 if not os.path.exists(INPUT_CSV):
-    print("❌ train.csv not found! Run generate script first.")
+    print("train.csv not found. Run generate_synthetic_data.py first.")
     exit()
 
 df = pd.read_csv(INPUT_CSV)
 processed_data = []
 
-# Precise grading prompt
 EXTRACT_PROMPT = """
-Act as a fair Professor. Analyze the student's solution.
-Provide scores based on Logic and Correctness (0-100).
+You are a strict grader.
+Image 1 is the exam question.
+Image 2 is the CORRECT answer.
+Image 3 is the STUDENT's answer.
 
-GUIDELINES:
-- Perfect answer = 100.
-- Correct Logic but minor Syntax error (missing ;, typos) = Score 70-85.
-- Correct Logic but wrong output format = Score 60-75.
-- Logic wrong = Score 0-50.
+Compare the student's answer to the correct answer and score it:
+- Matches correct answer fully = 90-100
+- Correct approach, minor error = 70-85
+- Partially correct, missing key parts = 40-65
+- Wrong approach = 10-35
+- Completely wrong or empty = 0
 
-Format strictly:
-Logic: [Score]
-Accuracy: [Score]
-Clarity: [Score]
+Respond with ONLY these two lines, nothing else:
+Score: [0-100]
+Confidence: [0-100]
 """
 
-print(f"🔄 Processing {len(df)} exams...")
+print(f"Processing {len(df)} exams...")
 
 for index, row in df.iterrows():
-    filename = row['filename']
+    filename  = row['filename']
     real_grade = row['grade']
 
-    q_path = os.path.join("data/questions", filename)
-    s_path = os.path.join("data/solutions", filename)
+    q_path = os.path.join(QUESTIONS_DIR, filename)
+    s_path = os.path.join(SOLUTIONS_DIR, filename)
+    a_path = os.path.join(ANSWERS_DIR,   filename)
 
-    if not os.path.exists(q_path) or not os.path.exists(s_path):
+    if not os.path.exists(q_path) or not os.path.exists(s_path) or not os.path.exists(a_path):
+        print(f"Skipping {filename} - missing image file.")
         continue
 
     messages = [{"role": "user", "content": [
         {"type": "image", "image": q_path},
+        {"type": "image", "image": a_path},
         {"type": "image", "image": s_path},
-        {"type": "text", "text": EXTRACT_PROMPT}
+        {"type": "text",  "text": EXTRACT_PROMPT}
     ]}]
 
     text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
@@ -86,34 +86,26 @@ for index, row in df.iterrows():
     inputs = processor(text=[text], images=image_inputs, padding=True, return_tensors="pt").to("cuda")
 
     with torch.no_grad():
-        generated_ids = model.generate(**inputs, max_new_tokens=128, do_sample=False)
+        generated_ids = model.generate(**inputs, max_new_tokens=512, do_sample=False)
 
     full_output = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
     clean_response = full_output.split("assistant")[-1] if "assistant" in full_output else full_output
 
     try:
-        # Strong regex to extract scores
-        logic = int(re.search(r"Logic\D*(\d+)", clean_response, re.IGNORECASE).group(1))
-        acc = int(re.search(r"Accuracy\D*(\d+)", clean_response, re.IGNORECASE).group(1))
-        clarity = int(re.search(r"Clarity\D*(\d+)", clean_response, re.IGNORECASE).group(1))
+        score      = int(re.search(r"Score\D*(\d+)",      clean_response, re.IGNORECASE).group(1))
+        confidence = int(re.search(r"Confidence\D*(\d+)", clean_response, re.IGNORECASE).group(1))
 
-        # Automatic scale correction (e.g. if model returns 8 instead of 80)
-        if logic <= 10: logic *= 10
-        if acc <= 10: acc *= 10
-        if clarity <= 10: clarity *= 10
-
-        print(f"✅ [{index+1}/{len(df)}] {filename}: L={logic:<3} A={acc:<3} C={clarity:<3} (Real: {real_grade})")
+        print(f"[{index+1}/{len(df)}] {filename}: Score={score} Confidence={confidence} (Real: {real_grade})")
 
         processed_data.append({
-            "filename": filename,
-            "logic": logic,
-            "accuracy": acc,
-            "clarity": clarity,
+            "filename":   filename,
+            "score":      score,
+            "confidence": confidence,
             "real_grade": real_grade
         })
     except Exception as e:
-        print(f"❌ Parsing failed for {filename}.")
+        print(f"Parsing failed for {filename}. Response was:\n{clean_response}\n")
 
 if processed_data:
     pd.DataFrame(processed_data).to_csv(OUTPUT_CSV, index=False)
-    print(f"\n🎉 Data Extraction Complete! Saved to '{OUTPUT_CSV}'")
+    print(f"\nDone. Saved to {OUTPUT_CSV}")

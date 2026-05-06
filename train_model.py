@@ -37,7 +37,7 @@ print("-" * 60)
 for index, row in raw_df.iterrows():
     # Calculate a rough "estimated score" from the AI (average of parameters)
     # This is not the final score, just an indicator for sanity checking
-    ai_rough_score = (row['logic'] + row['accuracy'] + row['clarity']) / 3
+    ai_rough_score = row['score']
 
     real_grade = row['real_grade']
 
@@ -60,7 +60,7 @@ df = pd.DataFrame(clean_rows)
 print(f"📉 Final dataset size: {len(df)} (Dropped {len(raw_df) - len(df)} outliers)\n")
 
 # Prepare data for training
-X = df[['logic', 'accuracy', 'clarity']].values
+X = df[['score', 'confidence']].values
 y = df['real_grade'].values
 
 scaler = StandardScaler()
@@ -77,7 +77,7 @@ class GraderNet(nn.Module):
     def __init__(self):
         super(GraderNet, self).__init__()
         # Simple linear model: one layer
-        self.fc1 = nn.Linear(3, 1)
+        self.fc1 = nn.Linear(2, 1)
 
     def forward(self, x):
         x = self.fc1(x)
@@ -114,9 +114,8 @@ print(f"💾 Scaler saved to: {SCALER_FILE}")
 # Print weights to verify the model learned that Accuracy is important
 weights = model.fc1.weight.data.numpy()[0]
 print("\n🧠 Learned Weights (Importance):")
-print(f"   Logic:    {weights[0]:.2f}")
-print(f"   Accuracy: {weights[1]:.2f}")
-print(f"   Clarity:  {weights[2]:.2f}")
+print(f"   Score:      {weights[0]:.2f}")
+print(f"   Confidence: {weights[1]:.2f}")
 
 print("\n🔍 Final Predictions (On Clean Data):")
 with torch.no_grad():
