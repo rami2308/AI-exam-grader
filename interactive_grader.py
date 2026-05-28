@@ -20,7 +20,7 @@ SOLUTIONS_DIR = "data/solutions"
 class GraderNet(nn.Module):
     def __init__(self):
         super(GraderNet, self).__init__()
-        self.fc1 = nn.Linear(3, 1)
+        self.fc1 = nn.Linear(2, 1)
 
     def forward(self, x):
         return self.fc1(x)
@@ -106,7 +106,7 @@ def grade_specific_exam(filename):
             feedback = clean_output.split("Feedback")[-1].replace(":", "").strip().split("\n")[0]
 
         # Final calculation
-        pred = brain(torch.FloatTensor(scaler.transform([[logic, acc, clarity]])).to(device)).item()
+        pred = brain(torch.FloatTensor(scaler.transform([[logic, acc]])).to(device)).item()
         final_grade = min(100, max(0, int(pred)))
 
         print("\n" + "╔" + "═"*50 + "╗")
