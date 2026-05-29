@@ -48,18 +48,15 @@ Image 1 is the exam question.
 Image 2 is the CORRECT answer provided by the professor.
 Image 3 is the STUDENT's answer.
 
-Your job:
-1. Read the correct answer and identify its key concepts or steps.
-2. Check how many of those key concepts the student actually covered.
-3. The student may use different words or phrasing than the correct answer.
-   Grade based on meaning and concepts, not exact wording.
+Follow these steps out loud:
+1. List the key concepts or steps from the CORRECT answer.
+2. Check which of those concepts the student covered. Grade by meaning, not exact wording.
+3. Count: how many concepts did the student get right out of total?
+4. Note any wrong or misleading information the student added.
 
-Respond with ONLY these two lines, nothing else:
-Coverage: [0-100]
-Mistakes: [0-100]
+At the end, write your final answer as:
+Coverage: [0-100]  (this is a PERCENTAGE, not a count. If student covered 2 out of 3 concepts, Coverage = 67, not 2)
 
-Coverage = percentage of the correct answer's key concepts the student captured.
-Mistakes = how much wrong or misleading information the student added (0 = nothing wrong, 100 = completely wrong).
 """
 
 print(f"Processing {len(df)} exams...")
@@ -92,19 +89,16 @@ for index, row in df.iterrows():
 
     full_output = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
     clean_response = full_output.split("assistant")[-1] if "assistant" in full_output else full_output
+    print(f"DEBUG: {clean_response[:300]}")
 
     try:
-        coverage = int(re.search(r"Coverage\D*(\d+)", clean_response, re.IGNORECASE).group(1))
-        mistakes = int(re.search(r"Mistakes\D*(\d+)", clean_response, re.IGNORECASE).group(1))
-
-        print(f"[{index+1}/{len(df)}] {filename}: Coverage={coverage} Mistakes={mistakes} (Real: {real_grade})")
-
-        processed_data.append({
-            "filename":   filename,
-            "coverage":   coverage,
-            "mistakes":   mistakes,
-            "real_grade": real_grade
-        })
+    coverage = int(re.search(r"Coverage\D*(\d+)", clean_response, re.IGNORECASE).group(1))
+    print(f"[{index+1}/{len(df)}] {filename}: Coverage={coverage} (Real: {real_grade})")
+    processed_data.append({
+        "filename": filename,
+        "coverage": coverage,
+        "real_grade": real_grade
+    })
     except Exception as e:
         print(f"Parsing failed for {filename}. Response was:\n{clean_response}\n")
 

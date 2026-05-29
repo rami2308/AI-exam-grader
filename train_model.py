@@ -60,7 +60,7 @@ df = pd.DataFrame(clean_rows)
 print(f"📉 Final dataset size: {len(df)} (Dropped {len(raw_df) - len(df)} outliers)\n")
 
 # Prepare data for training
-X = df[['coverage', 'mistakes']].values
+X = df[['coverage']].values
 y = df['real_grade'].values
 
 scaler = StandardScaler()
@@ -77,7 +77,7 @@ class GraderNet(nn.Module):
     def __init__(self):
         super(GraderNet, self).__init__()
         # Simple linear model: one layer
-        self.fc1 = nn.Linear(2, 1)
+        self.fc1 = nn.Linear(1, 1)
 
     def forward(self, x):
         x = self.fc1(x)
@@ -115,7 +115,6 @@ print(f"💾 Scaler saved to: {SCALER_FILE}")
 weights = model.fc1.weight.data.numpy()[0]
 print("\n🧠 Learned Weights (Importance):")
 print(f"   Coverage: {weights[0]:.2f}")
-print(f"   Mistakes: {weights[1]:.2f}")
 
 print("\n🔍 Final Predictions (On Clean Data):")
 with torch.no_grad():
