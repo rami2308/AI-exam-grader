@@ -43,21 +43,23 @@ df = pd.read_csv(INPUT_CSV)
 processed_data = []
 
 EXTRACT_PROMPT = """
-You are a strict grader.
+You are a strict academic grader.
 Image 1 is the exam question.
-Image 2 is the CORRECT answer.
+Image 2 is the CORRECT answer provided by the professor.
 Image 3 is the STUDENT's answer.
 
-Compare the student's answer to the correct answer and score it:
-- Matches correct answer fully = 90-100
-- Correct approach, minor error = 70-85
-- Partially correct, missing key parts = 40-65
-- Wrong approach = 10-35
-- Completely wrong or empty = 0
+Your job:
+1. Read the correct answer and identify its key concepts or steps.
+2. Check how many of those key concepts the student actually covered.
+3. The student may use different words or phrasing than the correct answer.
+   Grade based on meaning and concepts, not exact wording.
 
 Respond with ONLY these two lines, nothing else:
-Score: [0-100]
-Confidence: [0-100]
+Coverage: [0-100]
+Mistakes: [0-100]
+
+Coverage = percentage of the correct answer's key concepts the student captured.
+Mistakes = how much wrong or misleading information the student added (0 = nothing wrong, 100 = completely wrong).
 """
 
 print(f"Processing {len(df)} exams...")
@@ -92,15 +94,15 @@ for index, row in df.iterrows():
     clean_response = full_output.split("assistant")[-1] if "assistant" in full_output else full_output
 
     try:
-        score      = int(re.search(r"Score\D*(\d+)",      clean_response, re.IGNORECASE).group(1))
-        confidence = int(re.search(r"Confidence\D*(\d+)", clean_response, re.IGNORECASE).group(1))
+        coverage = int(re.search(r"Coverage\D*(\d+)", clean_response, re.IGNORECASE).group(1))
+        mistakes = int(re.search(r"Mistakes\D*(\d+)", clean_response, re.IGNORECASE).group(1))
 
-        print(f"[{index+1}/{len(df)}] {filename}: Score={score} Confidence={confidence} (Real: {real_grade})")
+        print(f"[{index+1}/{len(df)}] {filename}: Coverage={coverage} Mistakes={mistakes} (Real: {real_grade})")
 
         processed_data.append({
             "filename":   filename,
-            "score":      score,
-            "confidence": confidence,
+            "coverage":   coverage,
+            "mistakes":   mistakes,
             "real_grade": real_grade
         })
     except Exception as e:
