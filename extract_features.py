@@ -15,7 +15,10 @@ QUESTIONS_DIR = "data/questions"
 SOLUTIONS_DIR = "data/solutions"
 ANSWERS_DIR   = "data/answers"
 
-if torch.cuda.is_available():
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+print(f"Running on: {DEVICE.upper()}")
+
+if DEVICE == "cuda":
     torch.cuda.empty_cache()
 
 print("Loading Qwen Vision Model...")
@@ -24,11 +27,13 @@ bnb_config = BitsAndBytesConfig(
     bnb_4bit_use_double_quant=True,
     bnb_4bit_quant_type="nf4",
     bnb_4bit_compute_dtype=torch.float16
-)
+) if DEVICE == "cuda" else None
 
 try:
     model = Qwen2_5_VLForConditionalGeneration.from_pretrained(
-        MODEL_PATH, quantization_config=bnb_config, device_map="auto"
+        MODEL_PATH,
+        quantization_config=bnb_config,
+        device_map="auto"
     )
     processor = AutoProcessor.from_pretrained(MODEL_PATH)
 except Exception as e:
@@ -54,7 +59,10 @@ Follow these steps out loud:
 3. Count: how many concepts did the student get right out of total?
 4. Note any wrong or misleading information the student added.
 
-At the end, write your final answer as:
+Before your final answer, write one summary sentence in this exact format:
+Summary: [how many key concepts were in the correct answer, how many the student covered, and what was missing if anything]
+
+Then write:
 Coverage: [0-100]  (this is a PERCENTAGE, not a count. If student covered 2 out of 3 concepts, Coverage = 67, not 2)
 
 """
@@ -82,23 +90,29 @@ for index, row in df.iterrows():
 
     text = processor.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
     image_inputs, _ = process_vision_info(messages)
-    inputs = processor(text=[text], images=image_inputs, padding=True, return_tensors="pt").to("cuda")
+    inputs = processor(text=[text], images=image_inputs, padding=True, return_tensors="pt").to(DEVICE)
 
     with torch.no_grad():
         generated_ids = model.generate(**inputs, max_new_tokens=512, do_sample=False)
 
     full_output = processor.batch_decode(generated_ids, skip_special_tokens=True)[0]
     clean_response = full_output.split("assistant")[-1] if "assistant" in full_output else full_output
-    print(f"DEBUG: {clean_response[:300]}")
 
     try:
-    coverage = int(re.search(r"Coverage\D*(\d+)", clean_response, re.IGNORECASE).group(1))
-    print(f"[{index+1}/{len(df)}] {filename}: Coverage={coverage} (Real: {real_grade})")
-    processed_data.append({
-        "filename": filename,
-        "coverage": coverage,
-        "real_grade": real_grade
-    })
+        coverage = int(re.search(r"Coverage\D*(\d+)", clean_response, re.IGNORECASE).group(1))
+
+        summary_match = re.search(r"Summary:\s*(.+)", clean_response, re.IGNORECASE)
+        explanation = summary_match.group(1).strip() if summary_match else "No explanation generated"
+
+        print(f"[{index+1}/{len(df)}] {filename}: Coverage={coverage} (Real: {real_grade})")
+        print(f"   → {explanation}")
+
+        processed_data.append({
+            "filename":    filename,
+            "coverage":    coverage,
+            "explanation": explanation,
+            "real_grade":  real_grade
+        })
     except Exception as e:
         print(f"Parsing failed for {filename}. Response was:\n{clean_response}\n")
 
