@@ -48,23 +48,36 @@ df = pd.read_csv(INPUT_CSV)
 processed_data = []
 
 EXTRACT_PROMPT = """
-You are a strict academic grader.
-Image 1 is the exam question.
-Image 2 is the CORRECT answer provided by the professor.
-Image 3 is the STUDENT's answer.
+You are a strict academic grader evaluating a student's exam answer.
 
-Follow these steps out loud:
-1. List the key concepts or steps from the CORRECT answer.
-2. Check which of those concepts the student covered. Grade by meaning, not exact wording.
-3. Count: how many concepts did the student get right out of total?
-4. Note any wrong or misleading information the student added.
+Image 1: The exam question
+Image 2: The professor's CORRECT answer (the answer key)
+Image 3: The student's answer
 
-Before your final answer, write one summary sentence in this exact format:
-Summary: [how many key concepts were in the correct answer, how many the student covered, and what was missing if anything]
+STEP 1 — Decompose the correct answer into weighted components:
+Assign each component a weight (weights must sum to 100). Distinguish between:
+- Core concepts (30-50 pts each): the essential ideas the question is testing
+- Supporting points (15-25 pts each): important details
+- Minor details (5-10 pts): small additions that show depth
 
-Then write:
-Coverage: [0-100]  (this is a PERCENTAGE, not a count. If student covered 2 out of 3 concepts, Coverage = 67, not 2)
+STEP 2 — Score the student per component (partial credit allowed):
+- 100%: fully correct, clearly demonstrated understanding
+- 50-75%: partially correct or incomplete but on the right track
+- 25%: mentioned the concept but with significant errors or vagueness
+- 0%: missing, wrong, or contradicts the correct answer
 
+STEP 3 — Deduct for errors:
+For each piece of incorrect or misleading information the student wrote (not just omissions):
+Minor error: -5 pts. Major error: -10 to -20 pts.
+
+STEP 4 — Calculate:
+Multiply each component's weight by the student's percentage for that component. Sum them. Apply deductions. Clamp to [0, 100].
+
+Write one sentence:
+Summary: [what the student got right, partially right, and wrong]
+
+Then:
+Coverage: [0-100]
 """
 
 print(f"Processing {len(df)} exams...")

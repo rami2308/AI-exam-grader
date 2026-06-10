@@ -1,80 +1,80 @@
 filename,coverage,explanation,real_grade
-algo_q1b_100.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the application of the Master Theorem to conclude O(n log n).",100
-java_loop_100.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the initialization part of the for loop.",100
-sql_join_100.png,67,"The correct answer had 3 key concepts, the student covered 2 of them, and missed the concept of specifying the join type (which is implied but not explicitly stated).",100
-py_fibo_100.png,100,"The correct answer has 2 key concepts, the student covered both, and there was no wrong or misleading information added.",100
-algo_hash_100.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about the average case performance for lookup, insert, and delete operations being O(1) on average.",100
-os_thread_100.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about processes having separate memory.",100
-py_list_comp_100.png,0,"The correct answer had 1 concept, the student covered 0 concepts, and there was no correct information provided by the student.",100
-algo_q2_0.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the explanation that QuickSort can be O(n) even when it performs poorly due to bad pivot selection.",0
-sql_delete_0.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",0
-java_syntax_20.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor for comparison.",20
-algo_binary_40.png,33,"The correct answer has two key concepts, the student covered one concept, and missed the requirement for the array to be sorted in ascending order.",40
-java_class_88.png,33,"The correct answer had 3 key concepts, the student covered 1 concept, and missed 2 concepts.",88
-sql_semi_90.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",90
-py_colon_90.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the colon after the function definition.",90
-algo_dfs_85.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about using recursion instead of a stack.",85
-java_print_85.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor to compare against.",85
-py_tuple_78.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the distinction between a list and a tuple.",78
-java_types_75.png,0,"The correct answer had 1 concept, the student covered 0 concepts, and there was 1 missing concept.",75
-java_brackets_72.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor for comparison.",72
-algo_recur_75.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about stopping recursion without making another recursive call.",75
-sql_quotes_75.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of using the table alias 'u'.",75
-java_loop_60.png,50,"The correct answer had two key concepts, the student covered one concept, and missed the second concept.",60
-py_indent_65.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the second concept about indentation.",65
-sql_join_65.png,67,"The correct answer had 3 key concepts, the student covered 2 of them, and missed the ON clause.",65
-py_import_60.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",60
-gen_api_60.png,67,"The correct answer had three key concepts, the student covered two of them, and missed the definition of ""Application Programming Interface.""",60
-py_range_68.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about the range function starting at 0.",68
-java_ret_68.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer as the method should be `int get() { return 5; }`.",68
-sql_form_55.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",55
-algo_stack_50.png,50,"The correct answer has two key concepts: ""No, A Stack is LIFO (Last In First Out)"" and ""FIFO is used by Queues."" The student covered only the first concept correctly.",50
-py_var_70.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",70
-os_deadlock_80.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about the permanent blocking nature.",80
-net_tcp_95.png,100,"The correct answer had two key concepts—TCP being reliable and ordered, and UDP being fast but connectionless with no guarantee of delivery or order. The student covered both concepts correctly.",95
-cpp_cout_85.png,50,"The correct answer has two key concepts, the student covered one concept, and missed the second concept.",85
-py_half_50.png,67,"The correct answer has 3 key concepts, the student covered 2 concepts, and missed the concept of checking equality before returning the larger number.",50
-java_half_50.png,67,"The correct answer has 3 key concepts, the student covered 2 concepts, and missed the return statement.",50
-sql_half_50.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",50
-algo_half_50.png,50,"The correct answer has two key concepts, the student covered one concept, and missed the second concept about the right subtree containing only nodes greater than the root.",50
-py_zero_0.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the function definition part.",0
-java_zero_0.png,0,"The correct answer had 1 concept, the student covered 0 concepts, and there was 1 wrong or misleading information.",0
-sql_zero_0.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",0
-algo_zero_0.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about checking every element in the worst case.",0
-py_perfect2_100.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor for comparison.",100
-java_perfect2_100.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",100
-sql_perfect2_100.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no additional wrong or misleading information.",100
-algo_perfect2_100.png,100,"The correct answer has two key concepts, both of which the student covered correctly. There was no wrong or misleading information added.",100
-py_mostly_80.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about the range step size.",80
-java_mostly_80.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of incrementing the loop variable.",80
-sql_mostly_80.png,67,"The correct answer had 3 key concepts, the student covered 2 of them, and missed the ORDER BY clause.",80
-algo_mostly_80.png,67,"The correct answer had three key concepts, the student covered two of them, and missed the part about elements being removed from the front.",80
-py_low_25.png,67,"The correct answer had 3 key concepts, the student covered 2 concepts, and missed the concept of using 'self' as an argument in the method definition.",25
-java_low_25.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the method signature.",25
-sql_low_25.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",25
-algo_low_25.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about DFS using a stack.",25
-py_near_95.png,33,"The correct answer has 3 key concepts, the student covered 1 concept, and missed 2 concepts.",95
-java_near_95.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",95
-os_half_50.png,50,"The correct answer includes four key concepts: Mutual exclusion, hold and wait, no preemption, and circular wait. The student covered two concepts: Mutual exclusion and hold and wait.",50
-net_half_50.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the third concept about the ACK sent by the client.",50
-os_zero_0.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about managing the hard drive.",0
-net_zero_0.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about DNS encrypting internet traffic.",0
-os_perfect_100.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about using disk space as an extension of RAM.",100
-net_perfect_100.png,80,"The correct answer had two key concepts: HTTP stands for HyperText Transfer Protocol and it is used to transfer data between web browsers and servers. The student covered both concepts correctly but added an extra detail about transferring web pages over the internet, which is not part of the original question.",100
-algo_near100_95.png,100,"The correct answer has two key concepts, both of which the student covered correctly. There was no wrong or misleading information added.",95
-py_near100_95.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about wrapping another function to add behavior without changing it.",95
-py_mid_63.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the base case check for n=0.",63
-java_mid_71.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of initializing the array variable `x` within the for loop.",71
-sql_mid_67.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about including email addresses.",67
-algo_mid_74.png,50,"The correct answer has two key concepts, the student covered one concept, and missed the nested loops explanation.",74
-py_mid_46.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about setting the name attribute.",46
-java_mid_43.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the initialization part.",43
-sql_mid_77.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the comma after 'Alice'.",77
-os_mid_62.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about threads within the same process sharing the same memory space.",62
-net_mid_69.png,67,"The correct answer had three key concepts, the student covered two of them, and missed the concept about HTTP sending data in plain text with no encryption.",69
-algo_mid_42.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about elements being stored contiguously in memory.",42
-py_mid_73.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of using a list comprehension for filtering even numbers.",73
-java_mid_66.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about Java deciding which method to call based on the arguments passed.",66
-sql_mid_44.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",44
-os_mid_76.png,67,"The correct answer has three key concepts: synchronization tool, controlling access to shared resources, and preventing race conditions. The student covered two of these concepts.",76
-net_mid_61.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about operating at the data link layer.",61
+algo_q1b_100.png,85,"The student correctly identified the recurrence relation as \( T(n) = 2T(n/2) + O(n) \) and applied the Master Theorem correctly, concluding that \( T(n) = O(n \log n) \). However, they did not explicitly state the application of the Master Theorem or the final big-O notation, which slightly reduces the score.",100
+java_loop_100.png,60,The student correctly identified the need for a loop to print numbers from 1 to 5 but incorrectly used `System.out.println(i);` instead of `System.out.print(i);`.,100
+sql_join_100.png,85,"The student correctly identified the need to join the `users` and `orders` tables using the `u.id = o.uid` condition. However, they misspelled ""users"" as ""usera"" in their query, which results in a minor error.",100
+py_fibo_100.png,60,The student correctly implemented the base case and recursive call structure for Fibonacci numbers but did not include the return statement within the function definition.,100
+algo_hash_100.png,80,"The student correctly identified that hash maps have an average access time of O(1) on average, which is the core concept. However, they incorrectly stated ""O(1) average case for lookup, insert and delete,"" which is not accurate as it should be ""O(1) on average"" for all operations.",100
+os_thread_100.png,60,"The student correctly identified that threads share memory and processes do not, but incorrectly stated that threads are lighter and processes are heavier, which is not accurate.",100
+py_list_comp_100.png,60,The student correctly used list comprehension but incorrectly multiplied each number by 2 instead of squaring it.,100
+algo_q2_0.png,60,"The student correctly identified that QuickSort can degrade to O(n^2) in the worst case when the pivot always selects the smallest or largest element, but incorrectly stated it as O(n) because it is fast.",0
+sql_delete_0.png,60,The student correctly identified the need to use a `DELETE` statement but incorrectly omitted the `WHERE` clause specifying the user ID.,0
+java_syntax_20.png,60,"The student correctly identified the need to use `System.out.println` but incorrectly used a single quote instead of double quotes around the string ""Hello"".",20
+algo_binary_40.png,60,"The student correctly identified that the array must be sorted in ascending order, which is a core concept. However, they incorrectly stated that the array must be numbers, which is not necessary for binary search to work.",40
+java_class_88.png,60,"The student correctly identified that the class name should be capitalized, which is a core concept worth 30-50 points. However, they misspelled ""Car"" as ""car,"" which is a minor detail worth 5-10 points.",88
+sql_semi_90.png,60,"The student correctly identified the core concept of updating user statuses but incorrectly used ""SET"" instead of ""SET"" in the SQL command, which is a major error.",90
+py_colon_90.png,80,"The student correctly identified the function name `add(a, b)` and the return statement `return a + b`, but forgot to include the colon after the function definition line.",90
+algo_dfs_85.png,60,"The student correctly identified that DFS uses a stack and goes deep first, but incorrectly stated that it explores as deep as possible before backtracking, which is not accurate.",85
+java_print_85.png,60,The student correctly identified the need to use `System.out.println` but forgot to include the closing parenthesis and the semicolon at the end. They also incorrectly used `outprint` instead of `println`.,85
+py_tuple_78.png,60,"The student correctly identified that a list should be created using square brackets `[]` rather than parentheses `()`. However, they incorrectly used parentheses instead of square brackets, resulting in a tuple being created instead of a list.",78
+java_types_75.png,80,"The student correctly identified the need to declare an integer variable `x` and assign it the value `10`, but they did not specify the data type explicitly.",75
+java_brackets_72.png,60,The student correctly identified the need for an if statement but incorrectly placed the condition within parentheses without the necessary comparison operator. They also omitted the closing brace for the block.,72
+algo_recur_75.png,80,"The student correctly identified that the base case stops recursion and returns a value directly without making another recursive call, but they did not mention the importance of stopping the loop, which is a minor oversight.",75
+sql_quotes_75.png,60,"The student correctly identified the need to use a WHERE clause and the equality operator (=) in their SQL query. However, they incorrectly referenced the table as 'u' instead of 'users', which is a major error.",75
+java_loop_60.png,60,The student correctly identified the need for a loop to run exactly five times but incorrectly used an infinite loop structure instead of a finite loop.,60
+py_indent_65.png,60,"The student correctly identified the need for an indentation in the if statement but incorrectly used ""ifxequals5"" instead of ""if x == 5"". They also included an unnecessary comment ""// Indentation error"".",65
+sql_join_65.png,60,The student correctly identified the need to join the `orders` table with the `users` table but incorrectly used an `ON` clause without specifying the column names. They also did not include the `JOIN` keyword in their query.,65
+py_import_60.png,60,"The student correctly identified the need to import the math module but used an incorrect syntax (""include"" instead of ""import"").",60
+gen_api_60.png,80,"The student correctly identified that API stands for Application Programming Interface and that it allows different programs to communicate through defined rules. However, they incorrectly stated ""Application Interface"" instead of ""Application Programming Interface,"" which deducts points.",60
+py_range_68.png,60,"The student correctly identified the need to use a loop and print function, but incorrectly used `range(5)` instead of `range(6)` which would print numbers from 0 to 4 inclusively.",68
+java_ret_68.png,60,"The student correctly identified that the method should return an integer value, but incorrectly used `intget()` instead of `getInt()`. They also mistakenly included a `void` keyword which is not appropriate for a method that returns a value.",68
+sql_form_55.png,85,"The student correctly identified the core concept of selecting all rows from the users table using `SELECT * FROM users`, but the spelling of ""FROM"" was incorrect, which deducted points.",55
+algo_stack_50.png,60,The student correctly identified that a stack is LIFO but incorrectly stated that FIFO is used by queues instead of stacks.,50
+py_var_70.png,80,"The student correctly set the variable `valid` to `True`, which is the core concept of the question. However, they incorrectly named the variable as `valid-user`, which is a minor detail that should have been avoided.",70
+os_deadlock_80.png,60,"The student correctly identified that deadlock occurs when processes wait for resources held by others, but they incorrectly stated that it happens only when two processes wait for each other, which is not accurate as deadlock can involve more than two processes.",80
+net_tcp_95.png,60,"The student correctly identified TCP as reliable and UDP as fast, but incorrectly stated that TCP is ordered and connection-based, which is not accurate according to the correct answer.",95
+cpp_cout_85.png,60,"The student correctly used `cout` to print ""Hello"", but forgot to include `std::endl` which would ensure the output is displayed on a new line.",85
+py_half_50.png,80,"The student correctly implemented the core logic of comparing two numbers and returning the maximum value, but the function name `max` should be `max_value` or `maximum`, which is a minor detail that could be improved.",50
+java_half_50.png,60,"The student correctly implemented the core logic of checking if a number is even using the modulus operator, but forgot to include the method return statement in their answer.",50
+sql_half_50.png,60,"The student correctly identified the need to use `COUNT(*)` to count rows in the `users` table but incorrectly used `SELECT FROM users`, which does not achieve the desired result.",50
+algo_half_50.png,60,"The student correctly identified the core concept that the left subtree contains only nodes smaller than the root, but incorrectly stated that the right subtree contains only nodes greater than the root when it should be ""only nodes smaller than the root.""",50
+py_zero_0.png,60,"The student correctly implemented the function definition and used the multiplication operator, but did not include the `def` keyword before the function name, which is necessary for defining functions in Python.",0
+java_zero_0.png,60,"The student correctly identified the need to declare a string variable named ""name"" with the value ""John"". However, they incorrectly used an integer type instead of a string type, which is a major error.",0
+sql_zero_0.png,60,The student correctly identified the need to select the `name` column from the `users` table but incorrectly used an `UPDATE` statement instead of a `SELECT`.,0
+algo_zero_0.png,60,"The student correctly identified that linear search has an O(n) time complexity due to checking every element in the worst case, but incorrectly stated it as O(1), which is incorrect.",0
+py_perfect2_100.png,60,The student correctly identified the need to reverse a string but incorrectly used slicing syntax instead of the `[::-1]` method.,100
+java_perfect2_100.png,60,The student correctly implemented the conditional logic to return the absolute value of an integer but did not include the method signature `public int` which is necessary for a method declaration in Java.,100
+sql_perfect2_100.png,85,"The student correctly identified the need to use a WHERE clause with a price condition greater than 100, which is the core concept. However, they did not specify all columns from the products table as required by the question, resulting in a minor detail deduction.",100
+algo_perfect2_100.png,80,"The student correctly identified that binary search has an O(log n) time complexity due to halving the search space each step, but they incorrectly stated ""because the array is halved at each step"" instead of ""because it halves the search space each step.""",100
+py_mostly_80.png,60,"The student correctly identified the need to use a `for` loop and the `range()` function, but incorrectly set the range parameters which resulted in printing numbers from 0 to 9 instead of even numbers from 0 to 10.",80
+java_mostly_80.png,60,"The student correctly used a `for` loop structure but incorrectly used `System.out.print(i);` instead of `System.out.println(i);`, which results in printing numbers without newlines.",80
+sql_mostly_80.png,60,"The student correctly included the WHERE clause with the age condition but omitted the ORDER BY clause, which is necessary for the task. They also used the correct table name 'users' and the correct comparison operator '>' for the age condition.",80
+algo_mostly_80.png,60,The student correctly identified that a Queue follows FIFO principles but incorrectly stated that elements are added at the back instead of being added at the front and removed from the back.,80
+py_low_25.png,60,"The student correctly defined the class `Animal` and included the method `speak`, but did not include the `self` parameter in the method definition, which is necessary for methods in Python classes.",25
+java_low_25.png,80,"The student correctly identified the need for an interface named `Shape` with a method `getArea()` returning a double. However, they forgot to include the opening brace `{` after the interface name, which is necessary to properly define the interface.",25
+sql_low_25.png,60,"The student correctly identified the need to use the `AVG` function and the `salary` column from the `employees` table, but did not include the `FROM` clause which is necessary to specify the table name.",25
+algo_low_25.png,60,"The student correctly identified that BFS uses a queue and DFS uses a stack, but incorrectly stated that BFS explores level by level instead of breadth-first search (BFS) exploring all nodes at the current depth before moving down to the next level.",25
+py_near_95.png,60,"The student correctly identified the need to compare characters from both ends towards the center, but incorrectly used slicing to reverse the string instead of comparing characters directly.",95
+java_near_95.png,85,"The student correctly identified the core concept of checking if a number is positive but did not include the parameter name `n` in the method declaration, which is a minor detail.",95
+os_half_50.png,60,"The student correctly identified ""mutual exclusion"" and ""hold and wait,"" but incorrectly included ""no preemption"" and ""circular wait.""",50
+net_half_50.png,80,"The student correctly identified the three steps as SYN sent by client, SYN-ACK sent by server, and ACK sent by client, but incorrectly combined SYN and SYN-ACK into a single step.",50
+os_zero_0.png,60,"The student correctly identified that CPU scheduling decides which process runs next and for how long, but incorrectly stated it manages the hard drive.",0
+net_zero_0.png,60,"The student correctly identified that DNS translates domain names into IP addresses, which is a core concept worth 30-50 points. However, they incorrectly stated that DNS encrypts internet traffic, which is a major error worth up to -20 points.",0
+os_perfect_100.png,60,"The student correctly identified that virtual memory uses disk space as an extension of RAM, allowing programs to run even when physical memory is full. However, they did not fully explain how this allows programs to use more memory than physically available.",100
+net_perfect_100.png,60,"The student correctly identified HTTP as HyperText Transfer Protocol and its role in transferring data between web browsers and servers, but incorrectly stated it transfers web pages over the internet instead of data.",100
+algo_near100_95.png,80,"The student correctly identified that merge sort requires O(n) auxiliary space due to temporary arrays used during merging, but did not explicitly mention the need for extra space for these arrays.",95
+py_near100_95.png,80,"The student correctly identified that a decorator is a function that takes another function and extends its behavior without modifying it directly. However, they did not mention wrapping the function or adding behavior without changing it, which are minor details that could have been included for full credit.",95
+py_mid_63.png,60,"The student correctly implemented the base case but missed the recursive call in the function definition, leading to an infinite loop if not properly defined elsewhere.",63
+java_mid_71.png,80,The student correctly implemented the core concept of iterating through an array to calculate its sum but made a minor syntax error in the loop variable declaration.,71
+sql_mid_67.png,60,The student correctly identified the need to use `YEAR` function in the WHERE clause but incorrectly applied it to the `registered` column instead of `year`. They also omitted the `email` field from their query.,67
+algo_mid_74.png,60,"The student correctly identified that bubble sort has an O(n^2) worst-case time complexity due to nested loops, but incorrectly stated it as O(n*2), which is not standard notation.",74
+py_mid_46.png,60,The student correctly identified the need for an `__init__` method in the constructor but incorrectly passed the parameter `name` without assigning it to `self.name`.,46
+java_mid_43.png,60,"The student correctly used a while loop and printed numbers from 1 to 5, but the loop condition was incorrect, leading to an infinite loop instead of printing only once.",43
+sql_mid_77.png,80,"The student correctly identified the core concept of using an `INSERT INTO` statement to add a new user to the `users` table. However, they did not include the semicolon at the end of the SQL command, which is necessary for proper syntax in SQL statements.",77
+os_mid_62.png,60,"The student correctly identified that processes have separate memory and threads share memory, but they incorrectly stated that threads within the same process can communicate directly without mentioning the need for synchronization mechanisms like locks or semaphores.",62
+net_mid_69.png,60,"The student correctly identified that HTTPS uses SSL/TLS encryption, which makes it secure against interception, but incorrectly stated HTTP sends data in plain text without encryption, which is not entirely accurate as HTTP can be used with SSL/TLS as well.",69
+algo_mid_42.png,60,"The student correctly identified that a linked list contains data and pointers to the next node, but incorrectly stated that elements are not stored contiguously in memory, which is a minor detail that should be correct.",42
+py_mid_73.png,85,"The student correctly implemented the core concept of filtering even numbers from a list using a list comprehension. However, there was a minor error in the function name, which should be `get_evens` instead of `get_even`.",73
+java_mid_66.png,60,"The student correctly identified that method overloading involves having methods with the same name but different parameter lists. However, they incorrectly stated that Java decides which method to call based on the arguments passed, which is not accurate as Java determines this at compile time.",66
+sql_mid_44.png,50,"The student correctly identified the need to use a WHERE clause in the DELETE statement but incorrectly used ""> 60"" instead of ""> 60"". They also omitted the WHERE clause entirely in their second attempt.",44
+os_mid_76.png,60,"The student correctly identified that semaphores control access to shared resources and prevent race conditions, but did not mention that they are synchronization tools used to manage access by multiple processes.",76
+net_mid_61.png,80,"The student correctly identified that a MAC address is a unique hardware identifier assigned to a network interface card, which operates at the data link layer and is used for local network communication. However, they missed mentioning that it is specifically assigned to a network device.",61
