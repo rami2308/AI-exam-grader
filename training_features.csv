@@ -1,27 +1,80 @@
-filename,logic,accuracy,clarity,real_grade
-algo_q1b_100.png,80,80,70,100
-java_loop_100.png,90,90,90,100
-algo_hash_100.png,90,85,80,100
-os_thread_100.png,85,85,90,100
-py_list_comp_100.png,100,90,90,100
-algo_q2_0.png,20,20,20,0
-sql_delete_0.png,0,0,0,0
-java_class_88.png,20,20,20,88
-sql_semi_90.png,85,75,90,90
-py_colon_90.png,85,70,90,90
-algo_dfs_85.png,70,70,70,85
-java_print_85.png,70,70,70,85
-py_tuple_78.png,20,20,20,78
-java_types_75.png,20,20,20,75
-algo_recur_75.png,20,20,20,75
-sql_quotes_75.png,100,90,90,75
-java_loop_60.png,0,0,0,60
-py_indent_65.png,20,30,40,65
-py_import_60.png,90,90,90,60
-gen_api_60.png,100,100,100,60
-py_range_68.png,100,90,80,68
-java_ret_68.png,50,100,100,68
-py_var_70.png,85,85,90,70
-os_deadlock_80.png,20,20,20,80
-net_tcp_95.png,85,70,90,95
-cpp_cout_85.png,20,30,10,85
+filename,coverage,explanation,real_grade
+algo_q1b_100.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the application of the Master Theorem to conclude O(n log n).",100
+java_loop_100.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the initialization part of the for loop.",100
+sql_join_100.png,67,"The correct answer had 3 key concepts, the student covered 2 of them, and missed the concept of specifying the join type (which is implied but not explicitly stated).",100
+py_fibo_100.png,100,"The correct answer has 2 key concepts, the student covered both, and there was no wrong or misleading information added.",100
+algo_hash_100.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about the average case performance for lookup, insert, and delete operations being O(1) on average.",100
+os_thread_100.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about processes having separate memory.",100
+py_list_comp_100.png,0,"The correct answer had 1 concept, the student covered 0 concepts, and there was no correct information provided by the student.",100
+algo_q2_0.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the explanation that QuickSort can be O(n) even when it performs poorly due to bad pivot selection.",0
+sql_delete_0.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",0
+java_syntax_20.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor for comparison.",20
+algo_binary_40.png,33,"The correct answer has two key concepts, the student covered one concept, and missed the requirement for the array to be sorted in ascending order.",40
+java_class_88.png,33,"The correct answer had 3 key concepts, the student covered 1 concept, and missed 2 concepts.",88
+sql_semi_90.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",90
+py_colon_90.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the colon after the function definition.",90
+algo_dfs_85.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about using recursion instead of a stack.",85
+java_print_85.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor to compare against.",85
+py_tuple_78.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the distinction between a list and a tuple.",78
+java_types_75.png,0,"The correct answer had 1 concept, the student covered 0 concepts, and there was 1 missing concept.",75
+java_brackets_72.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor for comparison.",72
+algo_recur_75.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about stopping recursion without making another recursive call.",75
+sql_quotes_75.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of using the table alias 'u'.",75
+java_loop_60.png,50,"The correct answer had two key concepts, the student covered one concept, and missed the second concept.",60
+py_indent_65.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the second concept about indentation.",65
+sql_join_65.png,67,"The correct answer had 3 key concepts, the student covered 2 of them, and missed the ON clause.",65
+py_import_60.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",60
+gen_api_60.png,67,"The correct answer had three key concepts, the student covered two of them, and missed the definition of ""Application Programming Interface.""",60
+py_range_68.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about the range function starting at 0.",68
+java_ret_68.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer as the method should be `int get() { return 5; }`.",68
+sql_form_55.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",55
+algo_stack_50.png,50,"The correct answer has two key concepts: ""No, A Stack is LIFO (Last In First Out)"" and ""FIFO is used by Queues."" The student covered only the first concept correctly.",50
+py_var_70.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",70
+os_deadlock_80.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about the permanent blocking nature.",80
+net_tcp_95.png,100,"The correct answer had two key concepts—TCP being reliable and ordered, and UDP being fast but connectionless with no guarantee of delivery or order. The student covered both concepts correctly.",95
+cpp_cout_85.png,50,"The correct answer has two key concepts, the student covered one concept, and missed the second concept.",85
+py_half_50.png,67,"The correct answer has 3 key concepts, the student covered 2 concepts, and missed the concept of checking equality before returning the larger number.",50
+java_half_50.png,67,"The correct answer has 3 key concepts, the student covered 2 concepts, and missed the return statement.",50
+sql_half_50.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",50
+algo_half_50.png,50,"The correct answer has two key concepts, the student covered one concept, and missed the second concept about the right subtree containing only nodes greater than the root.",50
+py_zero_0.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the function definition part.",0
+java_zero_0.png,0,"The correct answer had 1 concept, the student covered 0 concepts, and there was 1 wrong or misleading information.",0
+sql_zero_0.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",0
+algo_zero_0.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about checking every element in the worst case.",0
+py_perfect2_100.png,0,"The correct answer has 1 concept, the student covered 0 concepts, and there is no correct answer provided by the professor for comparison.",100
+java_perfect2_100.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",100
+sql_perfect2_100.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no additional wrong or misleading information.",100
+algo_perfect2_100.png,100,"The correct answer has two key concepts, both of which the student covered correctly. There was no wrong or misleading information added.",100
+py_mostly_80.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about the range step size.",80
+java_mostly_80.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of incrementing the loop variable.",80
+sql_mostly_80.png,67,"The correct answer had 3 key concepts, the student covered 2 of them, and missed the ORDER BY clause.",80
+algo_mostly_80.png,67,"The correct answer had three key concepts, the student covered two of them, and missed the part about elements being removed from the front.",80
+py_low_25.png,67,"The correct answer had 3 key concepts, the student covered 2 concepts, and missed the concept of using 'self' as an argument in the method definition.",25
+java_low_25.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the method signature.",25
+sql_low_25.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",25
+algo_low_25.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about DFS using a stack.",25
+py_near_95.png,33,"The correct answer has 3 key concepts, the student covered 1 concept, and missed 2 concepts.",95
+java_near_95.png,100,"The correct answer has 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",95
+os_half_50.png,50,"The correct answer includes four key concepts: Mutual exclusion, hold and wait, no preemption, and circular wait. The student covered two concepts: Mutual exclusion and hold and wait.",50
+net_half_50.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the third concept about the ACK sent by the client.",50
+os_zero_0.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about managing the hard drive.",0
+net_zero_0.png,50,"The correct answer has two key concepts, the student covered one concept correctly, and missed the second concept about DNS encrypting internet traffic.",0
+os_perfect_100.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about using disk space as an extension of RAM.",100
+net_perfect_100.png,80,"The correct answer had two key concepts: HTTP stands for HyperText Transfer Protocol and it is used to transfer data between web browsers and servers. The student covered both concepts correctly but added an extra detail about transferring web pages over the internet, which is not part of the original question.",100
+algo_near100_95.png,100,"The correct answer has two key concepts, both of which the student covered correctly. There was no wrong or misleading information added.",95
+py_near100_95.png,67,"The correct answer has three key concepts, the student covered two of them, and missed one concept about wrapping another function to add behavior without changing it.",95
+py_mid_63.png,50,"The correct answer has 2 key concepts, the student covered 1 concept, and missed the base case check for n=0.",63
+java_mid_71.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of initializing the array variable `x` within the for loop.",71
+sql_mid_67.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about including email addresses.",67
+algo_mid_74.png,50,"The correct answer has two key concepts, the student covered one concept, and missed the nested loops explanation.",74
+py_mid_46.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the second concept about setting the name attribute.",46
+java_mid_43.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the initialization part.",43
+sql_mid_77.png,50,"The correct answer had 2 key concepts, the student covered 1 concept, and missed the comma after 'Alice'.",77
+os_mid_62.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about threads within the same process sharing the same memory space.",62
+net_mid_69.png,67,"The correct answer had three key concepts, the student covered two of them, and missed the concept about HTTP sending data in plain text with no encryption.",69
+algo_mid_42.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about elements being stored contiguously in memory.",42
+py_mid_73.png,67,"The correct answer has 3 key concepts, the student covered 2 of them, and missed the concept of using a list comprehension for filtering even numbers.",73
+java_mid_66.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about Java deciding which method to call based on the arguments passed.",66
+sql_mid_44.png,100,"The correct answer had 1 concept, the student covered 1 concept, and there was no wrong or misleading information added.",44
+os_mid_76.png,67,"The correct answer has three key concepts: synchronization tool, controlling access to shared resources, and preventing race conditions. The student covered two of these concepts.",76
+net_mid_61.png,67,"The correct answer has three key concepts, the student covered two of them, and missed the concept about operating at the data link layer.",61
