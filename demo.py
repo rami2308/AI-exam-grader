@@ -1,3 +1,12 @@
+from PIL import Image as PILImage
+
+def resize_for_vlm(path, out, max_w=800, max_h=600):
+    img = PILImage.open(path)
+    img.thumbnail((max_w, max_h))
+    img.save(out)
+    return out
+
+
 """
 AI Exam Grader — Demo Script
 -----------------------------
@@ -93,7 +102,10 @@ def grade(filename):
         if not os.path.exists(path):
             print(f"  ❌  Missing file: {path}  ({label})")
             return
-
+    
+    q = resize_for_vlm(q, "/tmp/tmp_q.jpg")
+    s = resize_for_vlm(s, "/tmp/tmp_s.jpg")
+    a = resize_for_vlm(a, "/tmp/tmp_a.jpg")
     print(f"\n  Analyzing: {filename}")
     print("  Running VLM... (this takes ~20-40 seconds)")
 
@@ -109,7 +121,7 @@ def grade(filename):
     inputs       = processor(text=[text], images=image_inputs, padding=True, return_tensors="pt").to(device)
 
     with torch.no_grad():
-        gen_ids = vlm.generate(**inputs, max_new_tokens=512, do_sample=False)
+        gen_ids = vlm.generate(**inputs, max_new_tokens=1024, do_sample=False)
 
     raw     = processor.batch_decode(gen_ids, skip_special_tokens=True)[0]
     output  = raw.split("assistant")[-1] if "assistant" in raw else raw
@@ -120,6 +132,9 @@ def grade(filename):
         print("  ❌  Could not parse Coverage from VLM output.")
         print(f"  Raw output:\n{output}")
         return
+    print("\n--- RAW VLM OUTPUT ---")
+    print(output)
+    print("--- END ---\n")
 
     coverage = int(match.group(1))
 
