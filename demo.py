@@ -111,8 +111,8 @@ def grade(filename):
 
     messages = [{"role": "user", "content": [
         {"type": "image", "image": q},
-        {"type": "image", "image": s},
         {"type": "image", "image": a},
+        {"type": "image", "image": s},
         {"type": "text",  "text": COVERAGE_PROMPT}
     ]}]
 
