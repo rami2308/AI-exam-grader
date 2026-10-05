@@ -1,91 +1,88 @@
-# AI Exam Grader — Automated Handwritten Exam Grading System
+# AI Exam Grader
 
-An end-to-end AI pipeline that allows lecturers to upload handwritten exam papers and receive structured, justified grades automatically — consistently, at scale, and in a fraction of the time manual grading takes.
+A prototype that grades a student's exam answer from images. Given the exam question, the professor's correct answer and the student's answer, it produces a grade (0-100) and a one-sentence explanation.
 
-## The Problem
+Final-year project (team of two), SCE Ashdod.
 
-Grading exams manually is slow and inconsistent. For large classes, reviewing dozens of handwritten papers becomes a bottleneck that consumes hours of a lecturer's time. Beyond speed, subjectivity is a deeper issue — the same answer can receive different scores depending on the grader's fatigue or interpretation. Students deserve fair, standardised evaluation.
+## How it works
 
-## How It Works
+For each exam, three images are used: the question, the professor's answer and the student's answer.
 
-1. Handwritten exam papers are scanned and loaded from disk
-2. **Qwen2.5-VL-7B-Instruct** (4-bit quantized) reads each handwritten answer using chain-of-thought prompting
-3. The model evaluates the answer against a rubric — scoring for **logic** and **accuracy**
-4. **GraderNet** (custom neural network) maps those two scores into a final grade (0–100)
-5. Results are returned in a structured, reviewable format per student
-
-## Architecture
+1. **Weighted rubric from the professor's answer.** A pre-trained **Qwen2.5-VL-7B-Instruct** (4-bit quantized) is prompted to split the correct answer into weighted components (core concepts 30-50 points, supporting points 15-25, minor details 5-10, weights summing to 100).
+2. **Partial credit.** The model scores the student against each component (100%, 50-75%, 25%, 0%), deducts points for incorrect statements, and returns a **coverage score** (0-100) plus a one-sentence summary. Decoding is deterministic (`do_sample=False`).
+3. **Calibration.** **GraderNet**, a small PyTorch network trained in this repo, maps the coverage score to the final grade, so the output follows the professor's grading scale.
 
 ```
-Scanned Exam Paper (question + solution images)
-              ↓
-Qwen2.5-VL-7B-Instruct — 4-bit quantized via BitsAndBytesConfig
-  Chain-of-thought prompting: evaluates logic + accuracy
-              ↓
-     [logic_score, acc_score]
-              ↓
-GraderNet — nn.Linear(2, 1) → final grade
-              ↓
-     Structured output per student
+question + professor's answer + student's answer (3 images)
+              |
+Qwen2.5-VL-7B-Instruct (4-bit, inference only)
+   weighted components -> partial credit -> deductions
+              |
+        coverage score (0-100) + summary
+              |
+GraderNet (MLP 1 -> 16 -> 8 -> 1, trained here)
+              |
+        final grade (0-100)
 ```
 
-## Tech Stack
+The vision-language model is used as is. **It is not fine-tuned**; the only model trained in this project is GraderNet.
 
-| Layer | Technology |
+## How it was developed
+
+The approach changed several times, and each change came from looking at where grades disagreed with the professor's:
+
+- Splitting the grade into percentages for clarity, accuracy and logic failed, because the model's logic rarely matched the professor's.
+- Comparing the two answers directly was unreliable.
+- Extracting key points from the professor's answer worked better, and giving each point a **weight** (some points matter more than others) worked best.
+
+## Results
+
+Average grading error (MAE, points on a 0-100 scale, lower is better):
+
+| Version | Change | Avg. error |
+|---|---|---|
+| V1 | Binary prompt (correct / incorrect) | 20.4 |
+| V2 | Weighted partial credit per component (79 samples) | 13.5 |
+| V3 | 150 samples across many subjects, noise filter | 11.0 |
+
+GraderNet: train MAE 12.6, test MAE 11.0 (103 samples were left after filtering, split 80/20 into train and test).
+
+### Limitations (please read)
+- **All data is synthetic**: exam images were generated with code (rendered text), not scanned from real students. The model can read handwriting in general, but this project has **not** been evaluated on real handwritten exams.
+- The test set is small (about 20 samples), so the numbers are indicative, not a benchmark.
+- Outlier filtering (47 of 150 samples dropped where the model's score was far from the real grade) is applied **before** the train/test split, so the test set is filtered too. Results on unfiltered data would likely be worse.
+- GraderNet currently takes a single input, the coverage score.
+- Results come from a single run.
+
+## Project structure
+
+| File | Purpose |
 |---|---|
-| Vision-Language Model | Qwen2.5-VL-7B-Instruct |
-| Quantization | BitsAndBytesConfig (4-bit NF4) |
-| Model Fine-Tuning | SFT + GRPO via ms-swift |
-| Inference Serving | vLLM |
-| Grading Network | Custom GraderNet (PyTorch) |
-| Image Processing | OpenCV, Pillow |
-| Feature Extraction | Custom pipeline (logic + accuracy scores) |
-| UI | Gradio |
-| Backend | Python |
+| `generate_synthetic_data.py`, `generate_more_data.py` | Generate the synthetic exam images and grades (the first set and the extended set) |
+| `extract_features.py` | Runs Qwen2.5-VL on every exam, saves the coverage score and summary to `training_features.csv` |
+| `train_model.py` | Filters outliers, trains GraderNet, saves `grader_model.pth`, `scaler.pkl` and `loss_curve.png` |
+| `demo.py` | Pick an exam from a menu and see the predicted grade |
+| `data/questions`, `data/solutions`, `data/answers` | The three images per exam (same file name in each folder) |
+| `train.csv` | File name and real grade for each exam |
 
-## Project Structure
+## Run it
+
+Requires Python and a CUDA GPU (the 7B model runs in 4-bit). The first run downloads the model from Hugging Face.
 
 ```
-AI-exam-grader/
-├── universal_grader.py        # Main grader: loads Qwen, runs chain-of-thought evaluation
-├── interactive_grader.py      # GraderNet inference: scores → final grade
-├── math_grader.py             # Math-specific grading logic
-├── text_grader.py             # Text-specific grading logic
-├── train_model.py             # GraderNet training pipeline
-├── extract_features.py        # Feature extraction from model output
-├── generate_synthetic_data.py # Synthetic training data generation
-├── grader_model.pth           # Trained GraderNet weights
-├── scaler.pkl                 # Feature scaler for GraderNet input
-└── src/
-    ├── evpm/                  # Expression-aware Visual Prompting Module
-    └── instr_tuning/          # SFT + GRPO training scripts and prompts
-        └── scripts/
-            ├── sft.sh         # Stage 1: Supervised fine-tuning
-            ├── grpo.sh        # Stage 2: GRPO reinforcement learning
-            ├── serve_vllm.sh  # Deploy model with vLLM
-            └── serve_rewards.sh
+pip install -r requirements.txt
+python extract_features.py    # score every exam with Qwen2.5-VL
+python train_model.py         # train GraderNet
+python demo.py                # grade an exam interactively
 ```
 
-## Status
+To grade your own exam, put three images with the same file name in `data/questions/`, `data/solutions/` and `data/answers/`, then run `demo.py`.
 
-| Component | Status |
-|---|---|
-| Qwen2.5-VL-7B inference pipeline | ✅ Complete |
-| GraderNet (logic + accuracy → grade) | ✅ Complete |
-| SFT fine-tuning | ✅ Complete |
-| GRPO reinforcement learning | ✅ Complete |
-| Math & text subject graders | ✅ Complete |
-| Synthetic data generation | ✅ Complete |
-| Gradio UI | 🔄 In progress |
-| Rubric input interface | 🔄 Planned |
+## Background
 
-## Base Research
+The idea was inspired by VEHME (Vision-Language Model for Evaluating Handwritten Mathematics Expressions, EMNLP 2025). An earlier version of this repository included that project's training code; it was never used by this pipeline and has been removed.
 
-This project builds on the VEHME architecture:
-> *VEHME: Vision-Language Model For Evaluating Handwritten Mathematics Expressions* — EMNLP 2025
+## Possible next steps
+Evaluate on real handwritten exams, a web interface for upload and grading, and calibration to an individual professor's grading style.
 
-## Author
-
-**Rami Tal** — 3rd Year Computer Science, SCE Ashdod
-Final Year Project — Supervised by SCE Department of Computer Science
-[LinkedIn](https://linkedin.com/in/rami-tal) · [GitHub](https://github.com/rami2308)
+**Author:** Rami Tal · [LinkedIn](https://linkedin.com/in/rami-tal) · [GitHub](https://github.com/rami2308)
